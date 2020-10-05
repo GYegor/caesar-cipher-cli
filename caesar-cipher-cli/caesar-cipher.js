@@ -1,9 +1,8 @@
 const EOL = require('os').EOL;
 const minimist = require('minimist');
 const constants = require('./constants');
-const pipeline = require('./pipeline');
-
-const intgPattern = new RegExp(/^\d+$/);
+const { mainPipeLine } = require('./pipeline');
+const path = require('path')
 
 const args = minimist(process.argv.slice(2), {
   string: ['action', 'shift', 'input', 'output'],
@@ -16,23 +15,26 @@ const args = minimist(process.argv.slice(2), {
   },
 })
 
+const intgPattern = new RegExp(/^\d+$/);
+
 const actionTypes = ['encode', 'decode'];
+
+const inputFilePath = args.input ? path.join(__dirname, args.input) : null;
+
+const outputFilePath = args.output ? path.join(__dirname, args.output) : null;
 
 const handleCommandLineArgs = () => {
   if (args.help) {
     process.exitCode = constants.exitCodes.success;
   } else if (actionTypes.includes(args.action) && !intgPattern.test(args.shift)) {
-    console.log(actionTypes.includes(args.action), args.shift, !intgPattern.test(args.shift));
     process.exitCode = constants.exitCodes.noShiftValue;
   } else {
     switch (args.action) {
       case 'encode':
-        // TODO: handle encode
-        pipeline('encode', args.shift)
+        mainPipeLine('encode', args.shift, inputFilePath, outputFilePath)
         break;
       case 'decode':
-        // TODO: handle decode
-        pipeline('decode', args.shift)
+        mainPipeLine('decode', args.shift, inputFilePath, outputFilePath)
         break;
       default:
         process.exitCode = constants.exitCodes.noActionType;
@@ -42,11 +44,10 @@ const handleCommandLineArgs = () => {
 }
 
 handleCommandLineArgs();
-
 process.on('exit', (code) => {
   switch (code) {
     case constants.exitCodes.success:
-      console.log(`${EOL}SPASYBO!${EOL}`);
+      console.log(`${EOL}SUCCESS!${EOL}`);
       break;
     case constants.exitCodes.noActionType:
       console.error(`${EOL}Valid --action not found!${EOL}`);

@@ -45,7 +45,7 @@ const caesarIt = (actionType, char, normalizedShiftValue) => {
   return String.fromCharCode(shiftedCharCode)
 }
 
-const getOutputString = (actionType, inputString, shiftValue) => {
+const getResultText = (actionType, inputString, shiftValue) => {
   if (!inputString) {
     return;
   }
@@ -63,4 +63,4 @@ const getOutputString = (actionType, inputString, shiftValue) => {
     .join('')
 }
 
-module.exports = getOutputString;
+module.exports = getResultText;
