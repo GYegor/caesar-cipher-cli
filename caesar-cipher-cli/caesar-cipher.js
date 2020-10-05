@@ -1,6 +1,7 @@
 const EOL = require('os').EOL;
 const minimist = require('minimist');
 const constants = require('./constants');
+const pipeline = require('./pipeline');
 
 const intgPattern = new RegExp(/^\d+$/);
 
@@ -27,9 +28,11 @@ const handleCommandLineArgs = () => {
     switch (args.action) {
       case 'encode':
         // TODO: handle encode
+        pipeline('encode', args.shift)
         break;
       case 'decode':
         // TODO: handle decode
+        pipeline('decode', args.shift)
         break;
       default:
         process.exitCode = constants.exitCodes.noActionType;
@@ -43,6 +46,7 @@ handleCommandLineArgs();
 process.on('exit', (code) => {
   switch (code) {
     case constants.exitCodes.success:
+      console.log(`${EOL}SPASYBO!${EOL}`);
       break;
     case constants.exitCodes.noActionType:
       console.error(`${EOL}Valid --action not found!${EOL}`);
