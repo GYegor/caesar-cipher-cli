@@ -47,7 +47,7 @@ const caesarIt = (actionType, char, normalizedShiftValue) => {
 
 const getResultText = (actionType, inputString, shiftValue) => {
   if (!inputString) {
-    return;
+    return '';
   }
   const normalizedShiftValue = getNormalizedShiftValue(shiftValue)
   if (!normalizedShiftValue) {
