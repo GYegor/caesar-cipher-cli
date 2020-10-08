@@ -11,8 +11,12 @@ It doesn't affect any other non-Latin characters.
 # Installation
 
 1. Clone current repository to your local 
-2. Run terminal in the app dir
-3. Perform 'npm install' 
+2. Perform in command line:
+```
+cd caesar-cipher-cli
+npm install
+```
+3. Start usage
 
 ---
 
